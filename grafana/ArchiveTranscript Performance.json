@@ -79,7 +79,7 @@
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "smooth",
+            "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -106,7 +106,7 @@
               },
               {
                 "color": "red",
-                "value": 209715200
+                "value": 80
               }
             ]
           },
@@ -142,7 +142,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "lt_memory_usage_bytes",
+          "expr": "at_memory_usage_bytes",
           "legendFormat": "Memory",
           "range": true,
           "refId": "A"
@@ -236,15 +236,15 @@
       "pluginVersion": "12.2.1",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
           "editorMode": "code",
           "expr": "rate(process_cpu_seconds_total{job=\"live-transcript-server\"}[$__rate_interval])",
           "legendFormat": "Usage",
           "range": true,
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          }
         }
       ],
       "title": "CPU Usage %",
@@ -336,15 +336,15 @@
       "pluginVersion": "12.2.1",
       "targets": [
         {
+          "editorMode": "builder",
+          "expr": "rate(go_memstats_heap_alloc_bytes{job=\"archived-transcript-server\"}[$__rate_interval])",
+          "legendFormat": "Rate",
+          "range": true,
+          "refId": "A",
           "datasource": {
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "rate(go_memstats_heap_alloc_bytes{job=\"live-transcript-server\"}[$__rate_interval])",
-          "legendFormat": "Rate",
-          "range": true,
-          "refId": "A"
+          }
         }
       ],
       "title": "Heap Allocation Rate",
@@ -435,15 +435,15 @@
       "pluginVersion": "12.2.1",
       "targets": [
         {
+          "editorMode": "code",
+          "expr": "go_goroutines{job=\"archived-transcript-server\"}",
+          "legendFormat": "Routines",
+          "range": true,
+          "refId": "A",
           "datasource": {
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "go_goroutines{job=\"live-transcript-server\"}",
-          "legendFormat": "Routines",
-          "range": true,
-          "refId": "A"
+          }
         }
       ],
       "title": "Goroutines",
@@ -454,7 +454,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "The 95th percentile of how long your application is paused for garbage collection. A high value means your app is spending too much time cleaning up memory instead of doing work.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -503,8 +502,8 @@
                 "value": 0
               },
               {
-                "color": "dark-purple",
-                "value": 1
+                "color": "red",
+                "value": 80
               }
             ]
           },
@@ -535,15 +534,15 @@
       "pluginVersion": "12.2.1",
       "targets": [
         {
+          "editorMode": "code",
+          "expr": "sum by(quantile) (rate(go_gc_duration_seconds{job=\"archived-transcript-server\"}[$__rate_interval]))",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
           "datasource": {
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "sum by(quantile) (rate(go_gc_duration_seconds{job=\"live-transcript-server\"}[$__rate_interval]))",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
+          }
         }
       ],
       "title": "Garbage Collection Duration",
@@ -563,7 +562,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "Performance",
-  "uid": "adf4n7r",
-  "version": 2,
+  "uid": "addrclx",
+  "version": 1,
   "weekStart": ""
 }
